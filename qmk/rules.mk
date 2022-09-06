@@ -1,0 +1,13 @@
+LTO_ENABLE = yes
+EXTRAKEY_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+AUTO_SHIFT_ENABLE = no
+RGBLIGHT_ENABLE = no
+RGB_MATRIX_ENABLE = no
+
+PROMICRO = no
+
+BOOTLOADER = atmel-dfu
+ifeq ($(PROMICRO), yes)
+    BOOTLOADER = caterina
+endif
