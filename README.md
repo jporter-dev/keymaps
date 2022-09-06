@@ -6,6 +6,11 @@
 
 ## Configs
 
+- [QMK Firmware](https://github.com/jporter-dev/qmk_firmware/tree/master/keyboards/crkbd/keymaps/jporter-dev)
+- [ZMK Firmware](https://github.com/jporter-dev/zmk-config)
+
+## Setup
+
 ### QMK
 
 1. [Set up QMK](https://docs.qmk.fm/#/newbs_getting_started)
