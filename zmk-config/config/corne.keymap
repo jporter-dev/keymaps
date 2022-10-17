@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <behaviors.dtsi>
+
+// LAYERS
+#define DEFAULT 0
+#define NUM     1
+#define SYM     2
+#define FUNC    3
+
+// MACROS
+#define SUPER LC(LSHIFT)
+#define SUPER2 LA(LC(LSHIFT))
+
+&mt {
+  tapping-term-ms = <200>;
+  flavor = "tap-preferred";
+};
+
+/ {
+  behaviors {
+    hm: homerow_mods {
+      compatible = "zmk,behavior-hold-tap";
+      label = "HOMEROW_MODS";
+      #binding-cells = <2>;
+      tapping-term-ms = <200>;
+      quick-tap-ms = <0>;
+      flavor = "tap-preferred";
+      bindings = <&kp>, <&kp>;
+    };
+
+    td0: tap_dance_0 {
+      compatible = "zmk,behavior-tap-dance";
+      label = "TAP_DANCE_0";
+      #binding-cells = <0>;
+      tapping-term-ms = <200>;
+      bindings = <&hm RGUI SEMI>, <&kp SQT>;
+    };
+
+    td1: tap_dance_1 {
+      compatible = "zmk,behavior-tap-dance";
+      label = "TAP_DANCE_1";
+      #binding-cells = <0>;
+      tapping-term-ms = <200>;
+      bindings = <&mt LCTRL TAB>, <&kp ESC>;
+    };
+  };
+
+  combos {
+    compatible = "zmk,combos";
+    combo_cword {
+      timeout-ms = <50>;
+      key-positions = <16 19>;
+      bindings = <&caps_word>;
+    };
+
+    combo_vimwq {
+      timeout-ms = <50>;
+      key-positions = <1 2>;
+      bindings = <&vim_quit>;
+    };
+  };
+
+  macros {
+        vim_quit: vim_quit {
+            label = "ZM_vim_quit";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &kp ESC &kp COLON &kp W &kp Q>;
+        };
+    };
+
+  keymap {
+    compatible = "zmk,keymap";
+
+    default_layer {
+      bindings = <
+
+&none   /**/  &kp Q           &kp W       &kp E       &kp R           &kp T   /**/  &kp Y    &kp U           &kp I       &kp O       &kp P          /**/  &none
+&none   /**/  &hm LGUI A      &hm LALT S  &hm LCTRL D &hm LSHIFT F    &kp G   /**/  &kp H    &hm RSHIFT J    &hm RCTRL K &hm RALT L  &td0           /**/  &none
+&none   /**/  &kp Z           &kp X       &kp C       &kp V           &kp B   /**/  &kp N    &kp M           &kp COMMA   &kp DOT     &kp FSLH       /**/  &none
+              &td1  &lt NUM BSPC &mt LGUI SPACE  /**/  &mt RGUI RET &lt SYM DEL &mt RALT GRAVE
+
+      >;
+    };
+
+    num_layer {
+      bindings = <
+
+&none   /**/  &none         &kp LA(LEFT)  &kp UP        &kp LA(RIGHT) &kp PG_UP  /**/  &kp PLUS   &kp N7  &kp N8  &kp N9  &kp KP_MULTIPLY  /**/  &none
+&none   /**/  &kp SUPER     &kp LEFT      &kp DOWN      &kp RIGHT     &kp PG_DN  /**/  &kp MINUS  &kp N4  &kp N5  &kp N6  &kp SLASH        /**/  &none
+&none   /**/  &kp SUPER2    &none         &none         &kp HOME      &kp END    /**/  &kp N0     &kp N1  &kp N2  &kp N3  &kp DOT          /**/  &none
+              &trans  &trans  &trans  /**/  &trans  &mo FUNC  &trans
+
+      >;
+    };
+
+    sym_layer {
+      bindings = <
+
+&none   /**/  &kp EXCL    &kp AT         &kp HASH     &kp DLLR    &kp PRCNT   /**/  &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR &kp RPAR  /**/  &none
+&none   /**/  &kp GRAVE   &kp TILDE      &none        &none       &none  /**/  &kp MINUS &kp EQUAL &kp LBKT        &kp RBKT &kp BSLH  /**/  &none
+&none   /**/  &kp TILDE   &none          &none        &none       &none       /**/  &kp UNDER &kp PLUS  &kp LBRC        &kp RBRC &kp PIPE  /**/  &none
+              &trans &mo FUNC &trans  /**/  &trans &trans &trans
+
+      >;
+    };
+
+    func_layer {
+      bindings = <
+
+&none   /**/  &kp F1          &kp F2          &kp F3          &kp F4     &kp F5            /**/  &kp F6          &kp F7       &kp F8       &kp F9   &kp F10  /**/  &none
+&none   /**/  &none           &none           &kp C_PREV      &kp C_NEXT &kp C_PLAY_PAUSE  /**/  &kp C_MUTE      &kp C_VOL_DN &kp C_VOL_UP &none    &kp F11  /**/  &none
+&none   /**/  &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_NXT &bt BT_CLR        /**/  &none           &none        &none        &none    &kp F12  /**/  &none
+              &reset &trans &bootloader  /**/  &bootloader &trans &reset
+
+      >;
+    };
+  };
+};
