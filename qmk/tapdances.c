@@ -1,11 +1,11 @@
 #include "tapdances.h"
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_SEMI_QUOTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, semiquotegui, semiquotegui_reset),
     [TD_ESC_TAB] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, esctabctl, esctabctl_reset),
 };
 
-void semiquotegui(qk_tap_dance_state_t *state, void *user_data) {
+void semiquotegui(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         // single tap
         if (state->interrupted || !state->pressed) register_code(KC_SEMICOLON);
@@ -22,14 +22,14 @@ void semiquotegui(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void semiquotegui_reset(qk_tap_dance_state_t *state, void *user_data)
+void semiquotegui_reset(tap_dance_state_t *state, void *user_data)
 {
     unregister_code(KC_RGUI);
     unregister_code(KC_SEMICOLON);
     unregister_code(KC_QUOTE);
 }
 
-void esctabctl(qk_tap_dance_state_t *state, void *user_data) {
+void esctabctl(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         // single tap
         if (state->interrupted || !state->pressed) register_code(KC_TAB);
@@ -46,7 +46,7 @@ void esctabctl(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void esctabctl_reset(qk_tap_dance_state_t *state, void *user_data)
+void esctabctl_reset(tap_dance_state_t *state, void *user_data)
 {
     unregister_code(KC_LCTL);
     unregister_code(KC_TAB);
