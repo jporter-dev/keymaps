@@ -1,0 +1,6 @@
+[submodule "zmk-config"]
+	path = zmk-config
+	url = git@github.com:jporter-dev/zmk-config.git
+[submodule "qmk_firmware"]
+	path = qmk_firmware
+	url = git@github.com:jporter-dev/qmk_firmware.git
